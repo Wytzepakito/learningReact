@@ -5,9 +5,7 @@ const Search = () => {
     const [term, setTerm] = useState('');
     const [results, setResults] = useState([]);
 
-    console.log(results);
 
-    console.log('I run with every render')
     useEffect(() => {
         const search = async () => {
             const {data} = await axios.get('https://en.wikipedia.org/w/api.php', {
@@ -27,6 +25,10 @@ const Search = () => {
                 search();
             }
         }, 500);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, [term]);
 
     const renderedResults = results.map((result) => {
